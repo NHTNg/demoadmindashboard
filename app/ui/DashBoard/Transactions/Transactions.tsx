@@ -1,0 +1,85 @@
+import Image from "next/image";
+import styles from "./transaction.module.css";
+
+const Transactions = () => {
+  return (
+    <div className={styles.container}>
+      <h2 className={styles.title}>Latest Transactions</h2>
+      <table className={styles.table}>
+        <thead>
+          <tr>
+            <td>Name</td>
+            <td>Status</td>
+            <td>Date</td>
+            <td>Amount</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div className={styles.user}>
+                <Image
+                  alt="userImage"
+                  width={40}
+                  height={40}
+                  src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=2"
+                  className={styles.userimage}
+                />
+                Johnny
+              </div>
+            </td>
+            <td>
+              <span className={`${styles.status} ${styles.pending}`}>
+                Pending
+              </span>
+            </td>
+            <td>14.02.2023</td>
+            <td>$1000</td>
+          </tr>
+          <tr>
+            <td>
+              <div className={styles.user}>
+                <Image
+                  alt="userImage"
+                  width={40}
+                  height={40}
+                  src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=2"
+                  className={styles.userimage}
+                />
+                Johnny
+              </div>
+            </td>
+            <td>
+              <span className={`${styles.status} ${styles.done}`}>Done</span>
+            </td>
+            <td>14.02.2023</td>
+            <td>$1000</td>
+          </tr>
+          <tr>
+            <td>
+              <div className={styles.user}>
+                <Image
+                  alt="userImage"
+                  width={40}
+                  height={40}
+                  src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=2"
+                  className={styles.userimage}
+                />
+                Johnny
+              </div>
+            </td>
+            <td>
+              <span className={`${styles.status} ${styles.cancelled}`}>
+                Cancelled
+              </span>
+            </td>
+            <td>14.02.2023</td>
+            <td>$1000</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default Transactions;
