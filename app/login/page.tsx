@@ -1,8 +1,6 @@
 import LoginComponent from "../ui/Login/Login";
 
 const Login = () => {
-  return (
-      <LoginComponent />
-  );
+  return <LoginComponent />;
 };
 export default Login;

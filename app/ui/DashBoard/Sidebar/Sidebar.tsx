@@ -13,7 +13,7 @@ import {
   MdHelpCenter,
   MdLogout,
 } from "react-icons/md";
-
+import { auth } from "../../../../auth";
 const menuItems = [
   {
     title: "Pages",
@@ -77,20 +77,22 @@ const menuItems = [
   },
 ];
 
-const Sidebar = () => {
+const Sidebar = async () => {
+  const data = await auth();
+  // console.log(data);
+  const user = data?.user;
   return (
     <div className={styles.container}>
       <div className={styles.user}>
         <Image
           className={styles.userImage}
-          src="https://picsum.photos/200"
+          src={"https://picsum.photos/200"}
           alt=""
           width={50}
           height={50}
         />
         <div className={styles.userDetails}>
-          <span className={styles.username}>John Deeeep</span>
-          <span className={styles.title}>Admin</span>
+          <span className={styles.username}>{user.email || "No user"}</span>
         </div>
       </div>
       <ul>
@@ -103,6 +105,7 @@ const Sidebar = () => {
           </li>
         ))}
       </ul>
+
       <button className={styles.logoutbtn}>
         <MdLogout />
         Logout
@@ -112,3 +115,6 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+function getServerSession(auth: unknown) {
+  throw new Error("Function not implemented.");
+}

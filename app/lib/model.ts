@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-type TypeUser = {
+export type TypeUser = {
   username: String;
   email: String;
   password: String;

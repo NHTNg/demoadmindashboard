@@ -1,22 +1,29 @@
 import NextAuth from "next-auth";
-import { authConfig } from "./auth.config";
+import { authConfig } from "./authconfig";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { connectToDB } from "./lib/utils";
-import { User } from "./lib/model";
+import { connectToDB } from "./app/lib/utils";
+import { User } from "./app/lib/model";
 import bcrypt from "bcrypt";
 
-const login = async (credentials: any) => {
+
+
+type TypeCredentials = {
+  username: string;
+  password: string;
+};
+
+
+
+async function getUser(credentials: TypeCredentials) {
   try {
     connectToDB();
     const user = await User.findOne({ username: credentials.username });
-
     if (!user || !user.isAdmin) throw new Error("Wrong credentials!");
 
     const isPasswordCorrect = await bcrypt.compare(
-      credentials.password,
+      credentials.password as unknown as string,
       user.password
     );
-
     if (!isPasswordCorrect) throw new Error("Wrong credentials!");
 
     return user;
@@ -24,20 +31,23 @@ const login = async (credentials: any) => {
     console.log(err);
     throw new Error("Failed to login!");
   }
-};
+}
 
 export const { auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
+    
     CredentialsProvider({
-      async authorize(credentials) {
-        try {
-          const user = await login(credentials);
-          return user;
-        } catch (err) {
-          return null;
-        }
+      name: "Credentials",
+
+      async authorize(credentials: any) {
+        const user = await getUser(credentials);
+        if (user) return user;
+        return null;
       },
     }),
   ],
+  session: {
+    strategy: "jwt",
+  },
 });
